@@ -32,37 +32,32 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( MainForm ) );
             startServiceButton = new System.Windows.Forms.Button();
             selectFileButton = new System.Windows.Forms.Button();
             listOfAddedPrograms = new System.Windows.Forms.ListBox();
             selectProgramToCheck = new System.Windows.Forms.OpenFileDialog();
             stopServiceButton = new System.Windows.Forms.Button();
             waitBeforeRestart = new System.Windows.Forms.CheckBox();
-            notifyIcon = new System.Windows.Forms.NotifyIcon(components);
+            notifyIcon = new System.Windows.Forms.NotifyIcon( components );
             timeTextBox = new System.Windows.Forms.MaskedTextBox();
-            label1 = new System.Windows.Forms.Label();
-            toolTipCheckbox = new System.Windows.Forms.ToolTip(components);
+            restartPeriod = new System.Windows.Forms.Label();
+            toolTipCheckbox = new System.Windows.Forms.ToolTip( components );
             removeFileButton = new System.Windows.Forms.Button();
             SuspendLayout();
             // 
             // startServiceButton
             // 
-            startServiceButton.Location = new System.Drawing.Point(138, 12);
+            resources.ApplyResources( startServiceButton, "startServiceButton" );
             startServiceButton.Name = "startServiceButton";
-            startServiceButton.Size = new System.Drawing.Size(80, 23);
-            startServiceButton.TabIndex = 0;
-            startServiceButton.Text = "Start service";
+            startServiceButton.Tag = "StartButton";
             startServiceButton.UseVisualStyleBackColor = true;
             startServiceButton.Click += startServiceButton_Click;
             // 
             // selectFileButton
             // 
-            selectFileButton.Location = new System.Drawing.Point(138, 70);
+            resources.ApplyResources( selectFileButton, "selectFileButton" );
             selectFileButton.Name = "selectFileButton";
-            selectFileButton.Size = new System.Drawing.Size(80, 20);
-            selectFileButton.TabIndex = 1;
-            selectFileButton.Text = "Add exe";
             selectFileButton.UseVisualStyleBackColor = true;
             selectFileButton.Click += selectFileButton_Click;
             // 
@@ -71,12 +66,8 @@
             listOfAddedPrograms.BackColor = System.Drawing.SystemColors.ActiveBorder;
             listOfAddedPrograms.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listOfAddedPrograms.FormattingEnabled = true;
-            listOfAddedPrograms.ItemHeight = 15;
-            listOfAddedPrograms.Location = new System.Drawing.Point(10, 10);
-            listOfAddedPrograms.Margin = new System.Windows.Forms.Padding(0);
+            resources.ApplyResources( listOfAddedPrograms, "listOfAddedPrograms" );
             listOfAddedPrograms.Name = "listOfAddedPrograms";
-            listOfAddedPrograms.Size = new System.Drawing.Size(120, 225);
-            listOfAddedPrograms.TabIndex = 2;
             // 
             // selectProgramToCheck
             // 
@@ -84,55 +75,35 @@
             // 
             // stopServiceButton
             // 
-            stopServiceButton.Location = new System.Drawing.Point(138, 41);
+            resources.ApplyResources( stopServiceButton, "stopServiceButton" );
             stopServiceButton.Name = "stopServiceButton";
-            stopServiceButton.Size = new System.Drawing.Size(80, 23);
-            stopServiceButton.TabIndex = 3;
-            stopServiceButton.Text = "Stop service";
             stopServiceButton.UseVisualStyleBackColor = true;
             stopServiceButton.Click += StopServiceThread_Click;
             // 
             // waitBeforeRestart
             // 
-            waitBeforeRestart.AutoSize = true;
-            waitBeforeRestart.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            waitBeforeRestart.Checked = true;
-            waitBeforeRestart.CheckState = System.Windows.Forms.CheckState.Checked;
-            waitBeforeRestart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            waitBeforeRestart.Location = new System.Drawing.Point(138, 186);
+            resources.ApplyResources( waitBeforeRestart, "waitBeforeRestart" );
             waitBeforeRestart.Name = "waitBeforeRestart";
-            waitBeforeRestart.Size = new System.Drawing.Size(69, 49);
-            waitBeforeRestart.TabIndex = 4;
-            waitBeforeRestart.Text = "Wait\r\nfor\r\nfirst start";
             waitBeforeRestart.UseVisualStyleBackColor = true;
             waitBeforeRestart.CheckedChanged += waitBeforeRestart_CheckedChanged;
             // 
             // notifyIcon
             // 
-            notifyIcon.Icon = (System.Drawing.Icon)resources.GetObject("notifyIcon.Icon");
-            notifyIcon.Text = "Restart on crash";
+            resources.ApplyResources( notifyIcon, "notifyIcon" );
             notifyIcon.MouseClick += NotifyIcon_MouseClick;
             // 
             // timeTextBox
             // 
             timeTextBox.BackColor = System.Drawing.SystemColors.ControlDark;
             timeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            timeTextBox.Location = new System.Drawing.Point(138, 164);
-            timeTextBox.Mask = "00:00:00";
+            resources.ApplyResources( timeTextBox, "timeTextBox" );
             timeTextBox.Name = "timeTextBox";
-            timeTextBox.Size = new System.Drawing.Size(80, 16);
-            timeTextBox.TabIndex = 6;
-            timeTextBox.Text = "000020";
             timeTextBox.TextChanged += timeTextBox_TextChanged;
             // 
-            // label1
+            // restartPeriod
             // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(138, 146);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(80, 15);
-            label1.TabIndex = 7;
-            label1.Text = "Restart period";
+            resources.ApplyResources( restartPeriod, "restartPeriod" );
+            restartPeriod.Name = "restartPeriod";
             // 
             // toolTipCheckbox
             // 
@@ -140,11 +111,8 @@
             // 
             // removeFileButton
             // 
-            removeFileButton.Location = new System.Drawing.Point(138, 96);
+            resources.ApplyResources( removeFileButton, "removeFileButton" );
             removeFileButton.Name = "removeFileButton";
-            removeFileButton.Size = new System.Drawing.Size(80, 20);
-            removeFileButton.TabIndex = 8;
-            removeFileButton.Text = "Del exe";
             removeFileButton.UseVisualStyleBackColor = true;
             removeFileButton.Click += removeFileButton_Click;
             // 
@@ -154,21 +122,18 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             BackColor = System.Drawing.SystemColors.ControlDark;
             CancelButton = stopServiceButton;
-            ClientSize = new System.Drawing.Size(234, 241);
-            Controls.Add(removeFileButton);
-            Controls.Add(label1);
-            Controls.Add(timeTextBox);
-            Controls.Add(waitBeforeRestart);
-            Controls.Add(stopServiceButton);
-            Controls.Add(listOfAddedPrograms);
-            Controls.Add(selectFileButton);
-            Controls.Add(startServiceButton);
-            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            resources.ApplyResources( this, "$this" );
+            Controls.Add( removeFileButton );
+            Controls.Add( restartPeriod );
+            Controls.Add( timeTextBox );
+            Controls.Add( waitBeforeRestart );
+            Controls.Add( stopServiceButton );
+            Controls.Add( listOfAddedPrograms );
+            Controls.Add( selectFileButton );
+            Controls.Add( startServiceButton );
             Name = "MainForm";
-            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            Text = "Restart on crash";
             Resize += MainForm_Resize;
-            ResumeLayout(false);
+            ResumeLayout( false );
             PerformLayout();
         }
 
@@ -182,7 +147,7 @@
         private System.Windows.Forms.CheckBox waitBeforeRestart;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.MaskedTextBox timeTextBox;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label restartPeriod;
         private System.Windows.Forms.ToolTip toolTipCheckbox;
         private System.Windows.Forms.Button removeFileButton;
     }
