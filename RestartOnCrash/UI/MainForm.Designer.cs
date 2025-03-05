@@ -32,23 +32,23 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( MainForm ) );
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             startServiceButton = new System.Windows.Forms.Button();
             selectFileButton = new System.Windows.Forms.Button();
             listOfAddedPrograms = new System.Windows.Forms.ListBox();
             selectProgramToCheck = new System.Windows.Forms.OpenFileDialog();
             stopServiceButton = new System.Windows.Forms.Button();
             waitBeforeRestart = new System.Windows.Forms.CheckBox();
-            notifyIcon = new System.Windows.Forms.NotifyIcon( components );
+            notifyIcon = new System.Windows.Forms.NotifyIcon(components);
             timeTextBox = new System.Windows.Forms.MaskedTextBox();
             restartPeriod = new System.Windows.Forms.Label();
-            toolTipCheckbox = new System.Windows.Forms.ToolTip( components );
+            toolTipCheckbox = new System.Windows.Forms.ToolTip(components);
             removeFileButton = new System.Windows.Forms.Button();
             SuspendLayout();
             // 
             // startServiceButton
             // 
-            resources.ApplyResources( startServiceButton, "startServiceButton" );
+            resources.ApplyResources(startServiceButton, "startServiceButton");
             startServiceButton.Name = "startServiceButton";
             startServiceButton.Tag = "StartButton";
             startServiceButton.UseVisualStyleBackColor = true;
@@ -56,7 +56,7 @@
             // 
             // selectFileButton
             // 
-            resources.ApplyResources( selectFileButton, "selectFileButton" );
+            resources.ApplyResources(selectFileButton, "selectFileButton");
             selectFileButton.Name = "selectFileButton";
             selectFileButton.UseVisualStyleBackColor = true;
             selectFileButton.Click += selectFileButton_Click;
@@ -66,7 +66,7 @@
             listOfAddedPrograms.BackColor = System.Drawing.SystemColors.ActiveBorder;
             listOfAddedPrograms.BorderStyle = System.Windows.Forms.BorderStyle.None;
             listOfAddedPrograms.FormattingEnabled = true;
-            resources.ApplyResources( listOfAddedPrograms, "listOfAddedPrograms" );
+            resources.ApplyResources(listOfAddedPrograms, "listOfAddedPrograms");
             listOfAddedPrograms.Name = "listOfAddedPrograms";
             // 
             // selectProgramToCheck
@@ -75,34 +75,34 @@
             // 
             // stopServiceButton
             // 
-            resources.ApplyResources( stopServiceButton, "stopServiceButton" );
+            resources.ApplyResources(stopServiceButton, "stopServiceButton");
             stopServiceButton.Name = "stopServiceButton";
             stopServiceButton.UseVisualStyleBackColor = true;
             stopServiceButton.Click += StopServiceThread_Click;
             // 
             // waitBeforeRestart
             // 
-            resources.ApplyResources( waitBeforeRestart, "waitBeforeRestart" );
+            resources.ApplyResources(waitBeforeRestart, "waitBeforeRestart");
             waitBeforeRestart.Name = "waitBeforeRestart";
             waitBeforeRestart.UseVisualStyleBackColor = true;
             waitBeforeRestart.CheckedChanged += waitBeforeRestart_CheckedChanged;
             // 
             // notifyIcon
             // 
-            resources.ApplyResources( notifyIcon, "notifyIcon" );
+            resources.ApplyResources(notifyIcon, "notifyIcon");
             notifyIcon.MouseClick += NotifyIcon_MouseClick;
             // 
             // timeTextBox
             // 
             timeTextBox.BackColor = System.Drawing.SystemColors.ControlDark;
             timeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            resources.ApplyResources( timeTextBox, "timeTextBox" );
+            resources.ApplyResources(timeTextBox, "timeTextBox");
             timeTextBox.Name = "timeTextBox";
             timeTextBox.TextChanged += timeTextBox_TextChanged;
             // 
             // restartPeriod
             // 
-            resources.ApplyResources( restartPeriod, "restartPeriod" );
+            resources.ApplyResources(restartPeriod, "restartPeriod");
             restartPeriod.Name = "restartPeriod";
             // 
             // toolTipCheckbox
@@ -111,7 +111,7 @@
             // 
             // removeFileButton
             // 
-            resources.ApplyResources( removeFileButton, "removeFileButton" );
+            resources.ApplyResources(removeFileButton, "removeFileButton");
             removeFileButton.Name = "removeFileButton";
             removeFileButton.UseVisualStyleBackColor = true;
             removeFileButton.Click += removeFileButton_Click;
@@ -122,18 +122,19 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             BackColor = System.Drawing.SystemColors.ControlDark;
             CancelButton = stopServiceButton;
-            resources.ApplyResources( this, "$this" );
-            Controls.Add( removeFileButton );
-            Controls.Add( restartPeriod );
-            Controls.Add( timeTextBox );
-            Controls.Add( waitBeforeRestart );
-            Controls.Add( stopServiceButton );
-            Controls.Add( listOfAddedPrograms );
-            Controls.Add( selectFileButton );
-            Controls.Add( startServiceButton );
+            resources.ApplyResources(this, "$this");
+            Controls.Add(removeFileButton);
+            Controls.Add(restartPeriod);
+            Controls.Add(timeTextBox);
+            Controls.Add(waitBeforeRestart);
+            Controls.Add(stopServiceButton);
+            Controls.Add(listOfAddedPrograms);
+            Controls.Add(selectFileButton);
+            Controls.Add(startServiceButton);
             Name = "MainForm";
+            FormClosed += MainForm_FormClosed;
             Resize += MainForm_Resize;
-            ResumeLayout( false );
+            ResumeLayout(false);
             PerformLayout();
         }
 

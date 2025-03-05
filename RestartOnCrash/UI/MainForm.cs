@@ -34,7 +34,7 @@ partial class MainForm : Form
 
         private string CheckInterval { get; set; } = "0:20:0";
         private string StartApplicationOnlyAfterFirstExecution { get; set; }
-        
+
         #region [set <attribute>]
         public void SetUserReCheckTimer(TimeOnly time)
         {
@@ -60,10 +60,10 @@ partial class MainForm : Form
 
         public void SetUserAplicationPathsFromMainForm()
         {
-            if (FullPathToApplicationToMonitor == null || FullPathToApplicationToMonitor.Count == 0)
+            if ( FullPathToApplicationToMonitor == null || FullPathToApplicationToMonitor.Count == 0 )
                 return;
 
-            for (var i = 0; i < FullPathToApplicationToMonitor.Count; i++)
+            for ( var i = 0; i < FullPathToApplicationToMonitor.Count; i++ )
                 PathToApplicationsToMonitor[i] = FullPathToApplicationToMonitor[i];
         }
         #endregion
@@ -84,7 +84,7 @@ partial class MainForm : Form
         {
             var returnValue = string.Empty;
 
-            foreach (var t in PathToApplicationsToMonitor)
+            foreach ( var t in PathToApplicationsToMonitor )
                 returnValue += $"{Environment.NewLine}\"{t.Replace("\\", "\\\\")}\",";
 
             returnValue = returnValue.TrimEnd(',');
@@ -119,8 +119,8 @@ partial class MainForm : Form
 
         #region [Load list of programs]
         listOfAddedPrograms.Items.Clear();
-        if ( _configuration.PathToApplicationsToMonitor != null)
-            foreach (var currentElement in _configuration.PathToApplicationsToMonitor)
+        if ( _configuration.PathToApplicationsToMonitor != null )
+            foreach ( var currentElement in _configuration.PathToApplicationsToMonitor )
             {
                 _programs.FullPathToApplicationToMonitor.Add(currentElement);
                 var lastIndex = currentElement.LastIndexOf('\\') + correctionIndex;
@@ -130,8 +130,8 @@ partial class MainForm : Form
 
         _programs.SetUserSturtupOption(waitBeforeRestart.Checked);
 
-        if ( _configuration.CheckInterval != TimeSpan.Zero)
-            timeTextBox.Text = TimeOnly.FromTimeSpan( _configuration.CheckInterval).ToString("HH:mm:ss");
+        if ( _configuration.CheckInterval != TimeSpan.Zero )
+            timeTextBox.Text = TimeOnly.FromTimeSpan(_configuration.CheckInterval).ToString("HH:mm:ss");
 
         waitBeforeRestart.Checked = _configuration.StartApplicationOnlyAfterFirstExecution;
 
@@ -149,15 +149,15 @@ partial class MainForm : Form
 
         if ( ProcessUtilities.IsRestartOnCrashRunning() )
         {
-            logger.LogWarning( "RestartOnCrash is already running, cannot start" );
-            ToastService.Notify( $"RestartOnCrash is already running, cannot start" );
+            logger.LogWarning("RestartOnCrash is already running, cannot start");
+            ToastService.Notify($"RestartOnCrash is already running, cannot start");
             return;
         }
         else
         {
             #region [Start Service]
             if ( _checkerStarted )
-                StopServiceThread_Click( null, null );
+                StopServiceThread_Click(null, null);
             StartCheckerThread();
             #endregion
         }
@@ -165,16 +165,16 @@ partial class MainForm : Form
 
     private void StartCheckerThread()
     {
-            _checkerStarted = true;
-            _restartOnCrashService = new( () => StartRestartOnCrashService( _cancelTokenSource.Token ) );
-            _restartOnCrashService.Start();
+        _checkerStarted = true;
+        _restartOnCrashService = new(() => StartRestartOnCrashService(_cancelTokenSource.Token));
+        _restartOnCrashService.Start();
     }
 
     private void StartRestartOnCrashService(CancellationToken cancellationToken)
     {
         var logger = new EventViewerLogger();
 
-        var configurationProvider = new JsonFileConfigurationProvider( ConfigurationFileName );
+        var configurationProvider = new JsonFileConfigurationProvider(ConfigurationFileName);
         SetCurrentConfigurationFromForm();
 
         if ( _configuration.PathToApplicationsToMonitor.Length != 0 )
@@ -183,24 +183,27 @@ partial class MainForm : Form
                 Environment.NewLine
                 + $"Application to monitor: {_configuration.PathToApplicationsToMonitor}"
                 + Environment.NewLine
-                + $"Watching every: {Math.Round( _configuration.CheckInterval.TotalSeconds, 0 )} seconds"
+                + $"Watching every: {Math.Round(_configuration.CheckInterval.TotalSeconds, 0)} seconds"
                 + Environment.NewLine
-                + $"{nameof( _configuration.StartApplicationOnlyAfterFirstExecution )}: {_configuration.StartApplicationOnlyAfterFirstExecution}" );
-            StartRestartOnCrashService( logger, cancellationToken: cancellationToken );
+                + $"{nameof(_configuration.StartApplicationOnlyAfterFirstExecution)}: {_configuration.StartApplicationOnlyAfterFirstExecution}");
+            StartRestartOnCrashService(logger, cancellationToken: cancellationToken);
 
         }
         else
         {
-            ToastService.Notify( "You list of apps if empty" );
+            ToastService.Notify("You list of apps if empty");
         }
 
     }
 
     private void SetCurrentConfigurationFromForm()
     {
-        _configuration = new() { CheckInterval = TimeSpan.Parse(timeTextBox.Text), 
-                                 StartApplicationOnlyAfterFirstExecution = waitBeforeRestart.Checked, 
-                                 PathToApplicationsToMonitor = _programs.FullPathToApplicationToMonitor!.ToArray() };
+        _configuration = new()
+        {
+            CheckInterval = TimeSpan.Parse(timeTextBox.Text),
+            StartApplicationOnlyAfterFirstExecution = waitBeforeRestart.Checked,
+            PathToApplicationsToMonitor = _programs.FullPathToApplicationToMonitor!.ToArray()
+        };
     }
 
     /// <summary>
@@ -210,13 +213,13 @@ partial class MainForm : Form
     /// <param name="cancellationToken">Cancellation token to end the cycle</param>
     private void StartRestartOnCrashService(EventViewerLogger logger, CancellationToken cancellationToken)
     {
-        while (!cancellationToken.IsCancellationRequested)
+        while ( !cancellationToken.IsCancellationRequested )
         {
-            foreach (var currentPath in _configuration.PathToApplicationsToMonitor)
+            foreach ( var currentPath in _configuration.PathToApplicationsToMonitor )
             {
-                if (!ProcessUtilities.IsProcessRunning(currentPath))
+                if ( !ProcessUtilities.IsProcessRunning(currentPath) )
                 {
-                    if ( _configuration.StartApplicationOnlyAfterFirstExecution && !_hasAlreadyStartedManuallyOneTime)
+                    if ( _configuration.StartApplicationOnlyAfterFirstExecution && !_hasAlreadyStartedManuallyOneTime )
                         continue;
 
                     logger.LogInformation("Process restarting...");
@@ -232,7 +235,7 @@ partial class MainForm : Form
                         StartInfo = processInfo
                     };
 
-                    if (process.Start())
+                    if ( process.Start() )
                     {
                         logger.LogInformation(
                             $"Process \"{_configuration.PathToApplicationsToMonitor}\" restarted succesfully!");
@@ -252,34 +255,34 @@ partial class MainForm : Form
                 }
             }
 
-            Thread.Sleep( _configuration.CheckInterval);
+            Thread.Sleep(_configuration.CheckInterval);
         }
     }
 
     private async Task WriteConfigsToFileAsync()
     {
         string currentFolder = Directory.GetCurrentDirectory();
-        string configFile = Directory.GetFiles( currentFolder ).First( x => x.Contains( ConfigurationFileName ) );
-        
-        if ( string.IsNullOrWhiteSpace( configFile ) )
+        string configFile = Directory.GetFiles(currentFolder).First(x => x.Contains(ConfigurationFileName));
+
+        if ( string.IsNullOrWhiteSpace(configFile) )
         {
-            File.Create( currentFolder + ConfigurationFileName );
-            configFile = Directory.GetFiles( currentFolder ).First( x => x.Contains( ConfigurationFileName ) );
+            File.Create(currentFolder + ConfigurationFileName);
+            configFile = Directory.GetFiles(currentFolder).First(x => x.Contains(ConfigurationFileName));
         }
 
         #region [Get configs from form]
         _programs.PathToApplicationsToMonitor = new string[listOfAddedPrograms.Items.Count];
         _programs.SetUserAplicationPathsFromMainForm();
-        _programs.SetUserSturtupOption( waitBeforeRestart.Checked );
-        _programs.SetUserReCheckTimer( timeTextBox.Text );
+        _programs.SetUserSturtupOption(waitBeforeRestart.Checked);
+        _programs.SetUserReCheckTimer(timeTextBox.Text);
         #endregion
         var temp = string.Empty;
 
-        await using ( var sw = new StreamWriter( configFile, false ) ) 
+        await using ( var sw = new StreamWriter(configFile, false) )
         {
             try
             {
-                await sw.WriteAsync( "" );
+                await sw.WriteAsync("");
                 temp = '{' +
                        Environment.NewLine + _programs.GetApplicationPathsForConfigString() +
                        Environment.NewLine + _programs.GetUserReCheckTimer() +
@@ -288,7 +291,7 @@ partial class MainForm : Form
             }
             catch ( Exception ex )
             {
-                ToastService.Notify( $"Exception when try to build string to write config file\n{ex}" );
+                ToastService.Notify($"Exception when try to build string to write config file\n{ex}");
             }
 
             await sw.WriteAsync(temp);
@@ -303,7 +306,7 @@ partial class MainForm : Form
         if ( _checkerStarted )
         {
             _cancelTokenSource.Cancel();
-            ToastService.Notify( "RestartOnCrush service stoped." );
+            ToastService.Notify("RestartOnCrush service stoped.");
             _checkerStarted = false;
             _cancelTokenSource = new();
         }
@@ -313,7 +316,7 @@ partial class MainForm : Form
 
     private void MainForm_Resize(object sender, EventArgs e)
     {
-        if (WindowState != FormWindowState.Minimized)
+        if ( WindowState != FormWindowState.Minimized )
             return;
 
         Hide();
@@ -326,8 +329,8 @@ partial class MainForm : Form
         WindowState = FormWindowState.Normal;
         notifyIcon.Visible = false;
     }
-    
-    private void selectFileButton_Click( object sender, EventArgs e )
+
+    private void selectFileButton_Click(object sender, EventArgs e)
     {
         if ( selectProgramToCheck.ShowDialog() != DialogResult.OK )
             return;
@@ -335,15 +338,15 @@ partial class MainForm : Form
         _filePath = selectProgramToCheck.FileName;
 
         _fileName = selectProgramToCheck.SafeFileName;
-        if ( listOfAddedPrograms.Items.Contains( _fileName ) )
+        if ( listOfAddedPrograms.Items.Contains(_fileName) )
         {
-            ToastService.Notify( $"{_fileName} already added" );
+            ToastService.Notify($"{_fileName} already added");
         }
         else
         {
-            listOfAddedPrograms.Items.Add( _fileName );
-            _programs.FullPathToApplicationToMonitor.Add( _filePath );
-            ToastService.Notify( $"{_fileName} added" );
+            listOfAddedPrograms.Items.Add(_fileName);
+            _programs.FullPathToApplicationToMonitor.Add(_filePath);
+            ToastService.Notify($"{_fileName} added");
         }
 
         WriteConfigsToFileAsync().Wait();
@@ -351,10 +354,10 @@ partial class MainForm : Form
 
     private void removeFileButton_Click(object sender, EventArgs e)
     {
-        if (listOfAddedPrograms.Items.Count > 0)
+        if ( listOfAddedPrograms.Items.Count > 0 )
         {
             var removedElement = listOfAddedPrograms.SelectedIndex;
-            if (removedElement != NotSelectedElementIndex)
+            if ( removedElement != NotSelectedElementIndex )
             {
                 listOfAddedPrograms.Items.RemoveAt(removedElement);
                 _programs.FullPathToApplicationToMonitor.RemoveAt(removedElement);
@@ -390,5 +393,10 @@ partial class MainForm : Form
         restartPeriod.Text = _resourceManager.GetString("restartPeriod.Text");
         removeFileButton.Text = _resourceManager.GetString("removeFileButton.Text");
         selectFileButton.Text = _resourceManager.GetString("selectFileButton.Text");
+    }
+
+    private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+    {
+        _restartOnCrashService.Interrupt();
     }
 }
